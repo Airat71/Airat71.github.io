@@ -51,6 +51,15 @@
   footer { margin-top:32px; color:var(--dim); font-size:.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
   @media (max-width:760px){ .grid{grid-template-columns:1fr;} .s2,.s3,.s6{grid-column:span 1;} .hero{padding-top:48px;} }
   @media (prefers-reduced-motion:reduce){ .tile{transition:none;} }
+  #consent { position:fixed; left:16px; right:16px; bottom:16px; max-width:560px; margin:0 auto; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; font-size:.9rem; line-height:1.45; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; box-shadow:0 8px 30px rgba(0,0,0,.25); }
+  #consent[hidden] { display:none; }
+  #consent p { margin:0; flex:1 1 260px; }
+  #consent button { font:inherit; font-size:.85rem; color:var(--fg); background:none; border:1px solid var(--line); border-radius:99px; padding:5px 14px; cursor:pointer; }
+  #consent button:hover { border-color:var(--acc); color:var(--acc); }
+  #c-open { font:inherit; color:var(--dim); background:none; border:0; padding:0; cursor:pointer; text-decoration:underline; text-decoration-color:var(--acc); text-underline-offset:3px; }
+  #c-open:hover { color:var(--acc); }
+  button:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  @media print { #consent { display:none; } }
 </style>
 </head>
 <body>
@@ -92,18 +101,18 @@
     <div class="tile s3">
       <h2>monitoring-stack</h2>
       <p>Prometheus, Grafana, Alertmanager, fail2ban metrics. One Ansible command deploys it to one or several servers. CI smoke test. MIT.</p>
-      <a href="https://github.com/Airat71/monitoring-stack">GitHub</a>
+      <a href="https://github.com/Airat71/monitoring-stack" data-goatcounter-click="gh-monitoring-stack">GitHub</a>
     </div>
     <div class="tile s3">
       <h2>linux-admin-toolkit</h2>
       <p>Seven Bash scripts. Four run-tested in a clean container, ShellCheck in CI.</p>
-      <a href="https://github.com/Airat71/linux-admin-toolkit">GitHub</a>
+      <a href="https://github.com/Airat71/linux-admin-toolkit" data-goatcounter-click="gh-linux-admin-toolkit">GitHub</a>
     </div>
     <div class="tile s3">
       <h2>Writing</h2>
       <ul>
-        <li><a href="https://dev.to/airat71/i-tested-my-own-docs-like-a-stranger-they-failed-24-times-1ekf">I tested my own docs like a stranger. They failed 24 times.</a></li>
-        <li><a href="https://dev.to/airat71/see-whos-attacking-your-server-in-grafana-fail2ban-metrics-with-prometheus-2d7a">See who's attacking your server in Grafana</a></li>
+        <li><a href="https://dev.to/airat71/i-tested-my-own-docs-like-a-stranger-they-failed-24-times-1ekf" data-goatcounter-click="devto-docs-24">I tested my own docs like a stranger. They failed 24 times.</a></li>
+        <li><a href="https://dev.to/airat71/see-whos-attacking-your-server-in-grafana-fail2ban-metrics-with-prometheus-2d7a" data-goatcounter-click="devto-fail2ban">See who's attacking your server in Grafana</a></li>
       </ul>
     </div>
     <div class="tile s3">
@@ -117,12 +126,35 @@
 
     <div class="tile s6">
       <h2>Contact</h2>
-      <p><a href="mailto:airat71@proton.me">airat71@proton.me</a> · <a href="https://t.me/Airat71">Telegram</a> · <a href="https://github.com/Airat71">GitHub</a> · <a href="https://www.linkedin.com/in/airat-iunusov-0b38ab441/">LinkedIn</a></p>
+      <p><a href="mailto:airat71@proton.me" data-goatcounter-click="email">airat71@proton.me</a> · <a href="https://t.me/Airat71" data-goatcounter-click="telegram">Telegram</a> · <a href="https://github.com/Airat71" data-goatcounter-click="gh-profile">GitHub</a> · <a href="https://www.linkedin.com/in/airat-iunusov-0b38ab441/" data-goatcounter-click="linkedin">LinkedIn</a></p>
     </div>
   </div>
 
-  <footer><span>© 2026 Airat Iunusov</span><span>Updated 2026-10-21</span></footer>
+  <footer><span>© 2026 Airat Iunusov · <button type="button" id="c-open">Visit counter</button></span><span>Updated 2026-10-21</span></footer>
 </main>
+<div id="consent" role="region" aria-label="Visit counter" hidden>
+  <p>This site counts visits with GoatCounter, which sets no cookies. If you change the theme, your choice is saved in your browser.</p>
+  <div><button type="button" id="c-yes">Accept</button> <button type="button" id="c-no">Decline</button></div>
+</div>
+<script>
+(function(){
+  var box = document.getElementById('consent'), KEY = 'counter', loaded = false;
+  function get(){ try { return localStorage.getItem(KEY); } catch(e) { return null; } }
+  function set(v){ try { localStorage.setItem(KEY, v); } catch(e) {} }
+  function load(){
+    if (loaded) return; loaded = true;
+    var s = document.createElement('script');
+    s.async = true; s.src = '//gc.zgo.at/count.js';
+    s.setAttribute('data-goatcounter', 'https://airat71.goatcounter.com/count');
+    document.head.appendChild(s);
+  }
+  document.getElementById('c-yes').addEventListener('click', function(){ set('yes'); box.hidden = true; load(); });
+  document.getElementById('c-no').addEventListener('click', function(){ set('no'); box.hidden = true; if (loaded) location.reload(); });
+  document.getElementById('c-open').addEventListener('click', function(){ box.hidden = false; document.getElementById('c-yes').focus(); });
+  var v = get();
+  if (v === 'yes') load(); else if (v !== 'no') box.hidden = false;
+})();
+</script>
 <script>
 (function(){
   var root = document.documentElement, saved = null;
